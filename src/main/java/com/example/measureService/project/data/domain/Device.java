@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.UUID;
 
 @Entity
-@Table(name = "Device")
 @Data
 @Builder
 @AllArgsConstructor
@@ -20,16 +19,15 @@ import java.util.UUID;
 public class Device {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID serial;
+    private UUID deviceId;
     private String deviceName;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "DeviceType",
-            joinColumns = @JoinColumn(name = "deviceModel"),
-            inverseJoinColumns = @JoinColumn(name = "serialModel")
+    @JoinColumn(
+            name = "machine_machineSerial",
+            referencedColumnName = "machineSerial"
     )
-    private DeviceType deviceModel;
+    private Machine machineModel;
 
 
     private Boolean breakMode;

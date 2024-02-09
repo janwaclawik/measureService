@@ -10,7 +10,7 @@ import java.util.UUID;
 
 @Repository
 public interface DeviceRepository
-        extends JpaRepository<Device, String> {
+        extends JpaRepository<Device, UUID> {
 
     Optional<Device> findDeviceByDeviceName(String deviceName);
 }

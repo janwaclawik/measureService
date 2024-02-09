@@ -27,8 +27,8 @@ public class UserAccount {
     @ManyToMany
     @JoinTable(
             name = "Device",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "serial")
+            joinColumns = @JoinColumn(name = "user_account_userId"),
+            inverseJoinColumns = @JoinColumn(name = "device_deviceId")
     )
     private List<Device> devices = new ArrayList<>();
 

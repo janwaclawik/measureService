@@ -1,12 +1,11 @@
 package com.example.measureService.project.data.service;
 
 import com.example.measureService.project.data.domain.Device;
-import com.example.measureService.project.data.domain.DeviceType;
+import com.example.measureService.project.data.domain.Machine;
 import com.example.measureService.project.data.dto.DeviceCreateRequest;
 import com.example.measureService.project.data.repository.DeviceRepository;
-import com.example.measureService.project.data.repository.DeviceTypeRepository;
+import com.example.measureService.project.data.repository.MachineRepository;
 import jakarta.transaction.Transactional;
-import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,12 +14,12 @@ import java.util.List;
 @Service
 public class DeviceServiceImpl implements DeviceService {
     private final DeviceRepository deviceRepository;
-    private final DeviceTypeRepository deviceTypeRepository;
-
+    private final MachineRepository machineRepository;
+    
     @Autowired
-    public DeviceServiceImpl(DeviceRepository deviceRepository, DeviceTypeRepository deviceTypeRepository) {
+    public DeviceServiceImpl(DeviceRepository deviceRepository, MachineRepository machineRepository) {
         this.deviceRepository = deviceRepository;
-        this.deviceTypeRepository = deviceTypeRepository;
+        this.machineRepository = machineRepository;
     }
 
     @Override
@@ -35,9 +34,11 @@ public class DeviceServiceImpl implements DeviceService {
             throw new IllegalStateException("name taken");
         }
         Device device = deviceRepository.save(Device.buildDevice(deviceCreateRequest));
-        DeviceType deviceType = deviceTypeRepository.findById(deviceCreateRequest.getDeviceModelId()).orElseThrow(IllegalStateException::new);
-        device.setDeviceModel(deviceType);
+        Machine machine = machineRepository.findById(deviceCreateRequest.getMachineSerial()).
+                orElseThrow(IllegalStateException::new);
+        device.setMachineModel(machine);
         deviceRepository.save(device);
+
 
 //        Device device1 = deviceRepository.save(deviceCreateRequest);
 //        DeviceType deviceType = deviceTypeRepository.save(deviceCreateRequest.getDeviceModel());

@@ -7,7 +7,7 @@ import java.util.UUID;
 @Data
 public class DeviceCreateRequest {
     private String deviceName;
-    private UUID deviceModelId;
+    private UUID machineSerial;
     private Boolean breakMode;
     private Boolean waterFlow;
     private Boolean notifications;
